@@ -56,16 +56,8 @@ client.connect(err => {
                 res.send(documents);
             })
     })
-    app.post('/isUser', (req, res) => {
-        const email = req.body.email;
-        // console.log(req.body);
-        UpdateTutorCollection.find({ email: email })
-            .toArray((err, documents) => {
-                // console.log(documents);
-                res.send(documents);
-            })
-    })
- 
+    
+
     // post a form 
     app.post('/PostForm', (req, res) => {
 
@@ -79,7 +71,7 @@ client.connect(err => {
         const salary = req.body.salary;
         const className = req.body.class;
         const subject = req.body.subject;
-        PostFormCollection.insertOne({ name,email, phone, institute, location, medium, salary, subject, className })
+        PostFormCollection.insertOne({ name, email, phone, institute, location, medium, salary, subject, className })
             .then(result => {
                 console.log(result);
                 res.send(result.insertedCount > 0);
@@ -92,6 +84,16 @@ client.connect(err => {
                 res.send(documents);
             })
     });
+
+    app.post('/isUser', (req, res) => {
+        const email = req.body.email;
+        // console.log(req.body);
+        UpdateTutorCollection.find({ email: email })
+            .toArray((err, documents) => {
+                // console.log(documents);
+                res.send(documents);
+            })
+    })
 
     app.patch('/teacherUpdate/:id', (req, res) => {
         const location = req.body.location;
@@ -184,7 +186,7 @@ client.connect(err => {
     //    app.post('/applicantDetails' , (req, res) => {
     //     const applicant = req.body;
     //     console.log(applicant );
-        
+
     //     applicantDetailsCollection.insertOne(applicant)
     //     .then(result => {
     //         res.send(result.insertedCount > 0);
@@ -194,7 +196,7 @@ client.connect(err => {
     // applying to student
     app.post('/applicantDetails', (req, res) => {
 
-      
+
         const name = req.body.name;
         const email = req.body.email;
         const phone = req.body.phone;
