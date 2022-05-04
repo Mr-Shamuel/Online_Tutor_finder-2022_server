@@ -46,6 +46,7 @@ client.connect(err => {
     })
 
 
+    //adding role 
 
     app.post('/role', (req, res) => {
         const email = req.body.email;
@@ -58,7 +59,7 @@ client.connect(err => {
     })
     
 
-    // post a form 
+    // post a form  as a student
     app.post('/PostForm', (req, res) => {
 
         const name = req.body.name;
