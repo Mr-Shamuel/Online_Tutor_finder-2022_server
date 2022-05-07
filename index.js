@@ -46,6 +46,18 @@ client.connect(err => {
     })
 
 
+
+
+
+    app.get('/Clients', (req, res) => {
+        ClientsCollection.find({})
+            .toArray((err, documents) => {
+                console.log(documents);
+                res.send(documents);
+            })
+    });
+
+
     //adding role 
 
     app.post('/role', (req, res) => {
@@ -215,6 +227,7 @@ client.connect(err => {
                 res.send(documents);
             })
     });
+    
 
 
 
