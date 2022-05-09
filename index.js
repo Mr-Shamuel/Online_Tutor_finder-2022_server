@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 
+// const ObjectId = require('mongodb').ObjectId;
 const ObjectId = require('mongodb').ObjectId;
+
 const password = 'HVT6a9kkMhUPgGaQ';
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://shamuel:shamuel@cluster0.3dkyp.mongodb.net/OnlineTutor2022?retryWrites=true&w=majority";
@@ -27,7 +29,7 @@ client.connect(err => {
     const UpdateTutorCollection = client.db("OnlineTutor2022").collection("UpdateTutor");
     const UpdateStudentCollection = client.db("OnlineTutor2022").collection("UpdateStudent");
     const applicantDetailsCollection = client.db("OnlineTutor2022").collection("applicant");
-     
+
 
     //adding info to database
 
@@ -59,12 +61,22 @@ client.connect(err => {
     });
 
 
+    // delete student info
+
+    //collection is ok???
+    app.delete('/delete/:id', (req, res) => {
+        ClientsCollection.deleteOne({_id: ObjectId(req.params.id)})
+        .then(result => {
+            console.log(result)
+        })
+    })
+
     //adding role 
 
     app.post('/role', (req, res) => {
         const email = req.body.email;
         // console.log(req.body);
-        ClientsCollection.find({ mail: email})
+        ClientsCollection.find({ mail: email })
             .toArray((err, documents) => {
                 // console.log(documents);
                 res.send(documents);
@@ -74,18 +86,18 @@ client.connect(err => {
     app.get('/role', (req, res) => {
         ClientsCollection.find({})
             .toArray((err, documents) => {
-                console.log("total teacher",documents);
+                console.log("total teacher", documents);
                 res.send(documents);
             })
     });
 
 
 
-   
 
 
 
-    
+
+
 
     // post a form  as a student
     app.post('/PostForm', (req, res) => {
@@ -243,7 +255,7 @@ client.connect(err => {
                 res.send(documents);
             })
     });
-    
+
 
 
 
