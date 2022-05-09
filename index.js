@@ -27,6 +27,7 @@ client.connect(err => {
     const UpdateTutorCollection = client.db("OnlineTutor2022").collection("UpdateTutor");
     const UpdateStudentCollection = client.db("OnlineTutor2022").collection("UpdateStudent");
     const applicantDetailsCollection = client.db("OnlineTutor2022").collection("applicant");
+     
 
     //adding info to database
 
@@ -52,7 +53,7 @@ client.connect(err => {
     app.get('/Clients', (req, res) => {
         ClientsCollection.find({})
             .toArray((err, documents) => {
-                console.log(documents);
+                // console.log(documents);
                 res.send(documents);
             })
     });
@@ -63,12 +64,27 @@ client.connect(err => {
     app.post('/role', (req, res) => {
         const email = req.body.email;
         // console.log(req.body);
-        ClientsCollection.find({ mail: email })
+        ClientsCollection.find({ mail: email})
             .toArray((err, documents) => {
                 // console.log(documents);
                 res.send(documents);
             })
     })
+
+    app.get('/role', (req, res) => {
+        ClientsCollection.find({})
+            .toArray((err, documents) => {
+                console.log("total teacher",documents);
+                res.send(documents);
+            })
+    });
+
+
+
+   
+
+
+
     
 
     // post a form  as a student
@@ -86,7 +102,7 @@ client.connect(err => {
         const subject = req.body.subject;
         PostFormCollection.insertOne({ name, email, phone, institute, location, medium, salary, subject, className })
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 res.send(result.insertedCount > 0);
             })
     })
@@ -217,7 +233,7 @@ client.connect(err => {
 
         applicantDetailsCollection.insertOne({ email, name, phone, gender })
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 res.send(result.insertedCount > 0);
             })
     })
