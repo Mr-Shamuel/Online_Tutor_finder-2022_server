@@ -29,6 +29,7 @@ client.connect(err => {
     const UpdateTutorCollection = client.db("OnlineTutor2022").collection("UpdateTutor");
     const UpdateStudentCollection = client.db("OnlineTutor2022").collection("UpdateStudent");
     const applicantDetailsCollection = client.db("OnlineTutor2022").collection("applicant");
+    const PaymentsCollection = client.db("OnlineTutor2022").collection("Payment");
 
 
     //adding info to database
@@ -60,6 +61,18 @@ client.connect(err => {
             })
     });
 
+    //searcing work
+    app.get('/Clients2', (req, res) => {
+        const search =req.query.search;
+ 
+        // ClientsCollection.find({name:{$regex :search}})
+        ClientsCollection.find({institute:{$regex :search}})
+            .toArray((err, documents) => {
+                // console.log(documents);
+                res.send(documents);
+            })
+    });
+
 
     // delete student info
 
@@ -70,6 +83,26 @@ client.connect(err => {
             console.log(result)
         })
     })
+
+    //payment
+
+    app.post('/Payment', (req, res) => {
+        const mail = req.body.email;
+        console.log(req.body);
+        PaymentsCollection.insertOne({mail})
+            .then(result => {
+                res.send(result.insertedCount > 0);
+            })
+    })
+
+    app.get('/Payment', (req, res) => {
+        PaymentsCollection.find({})
+            .toArray((err, documents) => {
+                // console.log(documents);
+                res.send(documents);
+            })
+    });
+
 
     //adding role 
 
